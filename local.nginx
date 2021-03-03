@@ -92,13 +92,14 @@ http {
         index index.html;
         # enable for ldap auth
         #include /config/nginx/ldap.conf;
-
-        client_max_body_size 0;
+        client_body_buffer_size  128k;
 
         location /api1 {
+            proxy_pass_request_body on;
             proxy_pass http://endpoint-1:3000/;
         }
         location /api2 {
+            proxy_pass_request_body on;
             proxy_pass http://endpoint-2:3000/;
         }
     }
