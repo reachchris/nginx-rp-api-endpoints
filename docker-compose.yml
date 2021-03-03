@@ -1,0 +1,23 @@
+version: '3'
+services:
+  endpoint-1:
+    image: endpoint-1
+    build:
+      context: ./servers/srv-1
+      dockerfile: ./Dockerfile
+    restart: always
+  endpoint-2:
+    image: endpoint-2
+    build:
+      context: ./servers/srv-2
+      dockerfile: ./Dockerfile
+    restart: always
+  website-frontend:
+    image: nginx
+    depends_on:
+      - endpoint-1
+      - endpoint-2
+    ports:
+      - 8080:8080
+    volumes:
+      - ./local.nginx:/etc/nginx/nginx.conf
